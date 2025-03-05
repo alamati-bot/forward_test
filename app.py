@@ -44,6 +44,29 @@ def list_files():
 
     return render_template('files.html', files=files_data)
 
+@app.route('/directory')
+def list_directory():
+    try:
+      # Get the base directory of your app
+      base_dir = os.path.dirname(os.path.abspath(__file__))
+
+      # Function to recursively list files and directories
+      def get_directory_structure(directory, parent_path=""):
+          structure = []
+          for item in os.listdir(directory):
+              item_path = os.path.join(directory, item)
+              full_path = os.path.join(parent_path,item) if parent_path else item
+              if os.path.isdir(item_path):
+                  structure.append({'name': item, 'type': 'directory', 'path': full_path, 'children': get_directory_structure(item_path, full_path)})
+              else:
+                  structure.append({'name': item, 'type': 'file', 'path': full_path})
+          return structure
+
+      directory_structure = get_directory_structure(base_dir)
+      return render_template('directory.html', directory_structure=directory_structure)
+    except OSError as e:
+      return f"Error accessing directory: {e}"
+
 @app.route('/messages', methods=['GET', 'POST'])
 def display_messages():
     message_filepath = os.path.join(app.config['UPLOAD_FOLDER'], 'messages.txt')
