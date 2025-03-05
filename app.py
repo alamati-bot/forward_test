@@ -71,7 +71,6 @@ def list_directory():
                 return jsonify({'success': False, 'message': 'File not found.'})
 
 
-    def get_directory_structure(directory, parent_path=""):
     try:
       # Get the base directory of your app
       base_dir = os.path.dirname(os.path.abspath(__file__))
