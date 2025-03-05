@@ -46,7 +46,7 @@ def list_files():
 
 @app.route('/messages')
 def display_messages():
-    message_filepath = os.path.join(app.config['UPLOAD_FOLDER'], 'messages.txt')
+    message_filepath = 'messages.txt'
     try:
         with open(message_filepath, 'r') as f:
             messages = f.read()
