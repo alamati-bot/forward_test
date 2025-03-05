@@ -44,9 +44,20 @@ def list_files():
 
     return render_template('files.html', files=files_data)
 
-@app.route('/messages')
+@app.route('/messages', methods=['GET', 'POST'])
 def display_messages():
-    message_filepath = 'messages.txt'
+    message_filepath = os.path.join(app.config['UPLOAD_FOLDER'], 'messages.txt')
+    if request.method == 'POST':
+        if request.form.get('delete_messages'):
+            try:
+                with open(message_filepath, 'w') as f: # Open in write mode to truncate
+                    pass # This effectively clears the file
+                return redirect(url_for('display_messages'))
+            except FileNotFoundError:
+                return "messages.txt not found."
+            except OSError as e:
+                return f"Error clearing messages.txt: {e}"
+
     try:
         with open(message_filepath, 'r') as f:
             messages = f.read()
@@ -55,6 +66,7 @@ def display_messages():
         return "messages.txt not found."
     except OSError as e:
         return f"Error reading messages.txt: {e}"
+
 
 @app.route('/extractor', methods=['GET', 'POST'])
 def extractor():
