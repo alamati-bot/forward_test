@@ -93,8 +93,8 @@ def list_directory():
             except OSError as e:
               return f"Error accessing directory: {e}"
 
-    # directory_structure = get_directory_structure(base_dir)
-    # return render_template('directory.html', directory_structure=directory_structure)
+    directory_structure = get_directory_structure(base_dir)
+    return render_template('directory.html', directory_structure=directory_structure)
 
 @app.route('/messages', methods=['GET', 'POST'])
 def display_messages():
