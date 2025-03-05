@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +8,10 @@
 </head>
 <body>
     <h1>Messages from messages.txt</h1>
-    <pre>{{ messages }}</pre> <!-- Use <pre> for preserving formatting -->
+    <form method="POST">
+        <pre>{{ messages }}</pre>
+        <button type="submit" name="delete_messages" value="true">Delete Messages</button>
+    </form>
     <a href="/">Back to Upload</a>
 </body>
 </html>
