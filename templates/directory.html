@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Directory Structure</title>
+</head>
+<body>
+    <h1>Directory Structure</h1>
+    <ul>
+        {% for item in directory_structure %}
+            <li>
+                <strong>{{ item.name }}</strong> 
+                ({{ item.type }})
+                {% if item.type == 'directory' %}
+                    <ul>
+                        {% for child in item.children %}
+                            <li>{{ child.name }} ({{ child.type }})</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+    <a href="/">Back to Upload</a>
+</body>
+</html>
