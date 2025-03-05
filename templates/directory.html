@@ -2,24 +2,42 @@
 <html>
 <head>
     <title>Directory Structure</title>
+    <script>
+      function toggleVisibility(elementId) {
+        const element = document.getElementById(elementId);
+        element.style.display = element.style.display === 'none' ? 'block' : 'none';
+      }
+    </script>
 </head>
 <body>
     <h1>Directory Structure</h1>
-    <ul>
-        {% for item in directory_structure %}
-            <li>
-                <strong>{{ item.name }}</strong> 
-                ({{ item.type }})
-                {% if item.type == 'directory' %}
-                    <ul>
-                        {% for child in item.children %}
-                            <li>{{ child.name }} ({{ child.type }})</li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-            </li>
-        {% endfor %}
-    </ul>
+    <form method="POST" id="file-actions">
+        <ul>
+            {% for item in directory_structure %}
+                <li>
+                    <strong>{{ item.name }}</strong> ({{ item.type }})
+                    <button type="submit" name="action" value="delete" data-path="{{ item.path }}">Delete</button>
+                    {% if item.type == 'file' %}
+                        <button type="submit" name="action" value="download" data-path="{{ item.path }}">Download</button>
+                    {% endif %}
+                    {% if item.type == 'directory' %}
+                        <button onclick="toggleVisibility('{{ item.name }}')">
+                          {% if item.children and item.children[0] %}
+                            {{ item.children[0].name and 'Collapse' or 'Expand' }}
+                          {% else %}
+                            Expand
+                          {% endif %}
+                        </button>
+                        <ul id="{{ item.name }}" style="display: none;">
+                            {% for child in item.children %}
+                                <li>{{ child.name }} ({{ child.type }})</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </form>
     <a href="/">Back to Upload</a>
 </body>
 </html>
