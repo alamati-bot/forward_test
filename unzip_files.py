@@ -18,9 +18,16 @@ def extractor(filename, collage):
             shutil.rmtree(new_folder_name)
         except Exception as e:
             save_message(str(e))
-            pass
-        os.rename(collage, new_folder_name)
-        save_message(f"تم تغيير اسم المجلد من '{collage}' إلى '{new_folder_name}'")
+        try:
+            os.rename(collage, new_folder_name)
+            save_message(f"تم تغيير اسم المجلد من '{collage}' إلى '{new_folder_name}'")
+        except Exception as e:
+            save_message(str(e))
+            try:
+                os.mkdir(collage)
+                save_message(f"تم انشاء مجلد جديد باسم {collage}")
+            except Exception as e:
+                save_message(str(e))
         
         zip_file = zipfile.ZipFile(filename, 'r')
         zip_file.extractall(collage)
