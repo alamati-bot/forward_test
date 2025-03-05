@@ -69,7 +69,7 @@ def list_directory():
 
 @app.route('/messages', methods=['GET', 'POST'])
 def display_messages():
-    message_filepath = os.path.join(app.config['UPLOAD_FOLDER'], 'messages.txt')
+    message_filepath = 'messages.txt'
     if request.method == 'POST':
         if request.form.get('delete_messages'):
             try:
