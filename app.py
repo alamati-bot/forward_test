@@ -77,15 +77,27 @@ def list_directory():
 
       # Function to recursively list files and directories
       def get_directory_structure(directory, parent_path=""):
-          structure = []
-          for item in os.listdir(directory):
-              item_path = os.path.join(directory, item)
-              full_path = os.path.join(parent_path,item) if parent_path else item
-              if os.path.isdir(item_path):
-                  structure.append({'name': item, 'type': 'directory', 'path': full_path, 'children': get_directory_structure(item_path, full_path)})
-              else:
-                  structure.append({'name': item, 'type': 'file', 'path': full_path})
-          return structure
+                dirs = []
+                files = []
+                for item in os.listdir(directory):
+                    item_path = os.path.join(directory, item)
+                    full_path = os.path.join(parent_path, item) if parent_path else item
+                    if os.path.isdir(item_path):
+                        dirs.append({'name': item, 'type': 'directory', 'path': full_path, 'children': get_directory_structure(item_path, full_path)})
+                    else:
+                        files.append({'name': item, 'type': 'file', 'path': full_path})
+                return dirs + files # Concatenate directories and files
+        
+
+          # structure = []
+          # for item in os.listdir(directory):
+          #     item_path = os.path.join(directory, item)
+          #     full_path = os.path.join(parent_path,item) if parent_path else item
+          #     if os.path.isdir(item_path):
+          #         structure.append({'name': item, 'type': 'directory', 'path': full_path, 'children': get_directory_structure(item_path, full_path)})
+          #     else:
+          #         structure.append({'name': item, 'type': 'file', 'path': full_path})
+          # return structure
 
       directory_structure = get_directory_structure(base_dir)
       return render_template('directory.html', directory_structure=directory_structure)
