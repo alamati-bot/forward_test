@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Files</title>
+</head>
+<body>
+    <h1>Available Files</h1>
+    <form method="POST">
+    <ul>
+        {% for file in files %}
+            <li>
+                <a href="{{ file.url }}">{{ file.filename }}</a>
+                - Modified: {{ file.modified_time }}
+                <button type="submit" name="delete" value="{{ file.filename }}">Delete</button>
+            </li>
+        {% endfor %}
+    </ul>
+    </form>
+    <a href="/">Back to Upload</a>
+    <br>
+    <a href="/extractor">Go to unzip</a>
+</body>
+</html>

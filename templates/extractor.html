@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zip File Extractor</title>
+</head>
+<body>
+    <h1>Zip Files</h1>
+    <form method="POST">
+        <ul>
+            {% for zip_file in zip_files %}
+                <li>
+                    <a href="{{ url_for('download_file', filename=zip_file) }}">{{ zip_file }}</a>
+                    <button type="submit" name="extract" value="{{ zip_file }}">Extract</button>
+                </li>
+            {% endfor %}
+        </ul>
+    </form>
+    <a href="/">Back to Upload</a>
+    <br>
+    <a href="/files">View and Download Files</a>
+
+</body>
+</html>
